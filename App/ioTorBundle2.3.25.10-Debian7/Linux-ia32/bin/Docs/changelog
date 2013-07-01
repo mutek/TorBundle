@@ -1,0 +1,245 @@
+Tor Browser Bundle (2.3.25-10); suite=linux
+
+  * Update Firefox to 17.0.7esr
+  * Update zlib to 1.2.8
+  * Update libpng 1.5.16
+  * Update NoScript 2.6.6.6
+
+ -- Erinn Clark <erinn@torproject.org>  Sun Jun 23 23:20:25 BRT 2013
+
+Tor Browser Bundle (2.3.25-9); suite=linux
+
+  * Rebuild 64-bit bundles with Firefox optimizations disabled in order to
+    prevent browser crashes. (closes: #8970)
+  * Update HTTPS Everywhere to 3.2.2
+  * Update NoScript to 2.6.6.2
+
+ -- Erinn Clark <erinn@torproject.org>  Wed Jun 12 18:42:24 BRT 2013
+
+Tor Browser Bundle (2.3.25-8); suite=linux
+
+  * Update Firefox to 17.0.6esr
+  * Update HTTPS Everywhere to 3.2
+
+ -- Erinn Clark <erinn@torproject.org>  Sun May 12 22:05:55 BRT 2013
+
+Tor Browser Bundle (2.3.25-7); suite=linux
+
+  * Update Torbutton to 1.5.2
+  * Update libpng to 1.5.15
+  * Update NoScript to 2.6.6.1
+  * Firefox patch changes:
+    - Apply font limits to @font-face local() fonts and disable fallback
+      rendering for @font-face. (closes: #8455)
+    - Use Optimistic Data SOCKS handshake (improves page load performance).
+      (closes: #3875)
+    - Honor the Windows theme for inverse text colors (without leaking those
+      colors to content). (closes: #7920)
+    - Increase pipeline randomization and try harder to batch pipelined
+      requests together. (closes: #8470)
+    - Fix an image cache isolation domain key misusage. May fix several image
+      cache related crash bugs with New Identity, exit, and certain websites.
+      (closes: #8628)
+  * Torbutton changes:
+    - Allow session restore if the user allows disk actvity (closes: #8457)
+    - Remove the Display Settings panel and associated locales (closes: #8301)
+    - Fix "Transparent Torification" option. (closes: #6566)
+    - Fix a hang on New Identity. (closes: #8642)
+  * Build changes:
+    - Fetch our source deps from an https mirror (closes: #8286)
+    - Create watch scripts for syncing mirror sources and monitoring mirror
+      integrity (closes: #8338)
+
+ -- Erinn Clark <erinn@torproject.org>  Tue May  7 19:56:58 BRT 2013
+
+Tor Browser Bundle (2.3.25-6); suite=linux
+
+  * Update Firefox to 17.0.5esr
+  * Update NoScript to 2.6.59
+
+ -- Erinn Clark <erinn@torproject.org>  Mon Apr  1 19:08:16 EDT 2013
+
+Tor Browser Bundle (2.3.25-5); suite=linux
+
+  * Update Firefox to 17.0.4esr
+  * Update NoScript to 2.6.5.8
+  * Update HTTPS Everywhere to 3.1.4
+  * Fix non-English language bundles to have the correct branding (closes: #8302)
+  * Firefox patch changes:
+    - Remove "This plugin is disabled" barrier
+      * This improves the user experience for HTML5 Youtube videos:
+        They "silently" attempt to load flash first, which was not so silent
+        with this barrier in place. (closes: #8312)
+    - Disable NoScript's HTML5 media click-to-play barrier (closes: #8386)
+    - Fix a New Identity hang and/or crash condition (closes: #6386)
+    - Fix crash with Drag + Drop on Windows (closes: #8324)
+  * Torbutton changes:
+    - Fix Drag+Drop crash by using a new TBB drag observer (closes: #8324)
+    - Fix XML/E4X errors with Cookie Protections (closes: #6202)
+    - Don't clear cookies at shutdown if user wants disk history (closes: #8423)
+    - Leave IndexedDB and Offline Storage disabled. (closes: #8382)
+    - Clear DOM localStorage on New Identity. (closes: #8422)
+    - Don't strip "third party" HTTP auth from favicons (closes: #8335)
+    - Localize the "Spoof english" button strings (closes: #5183)
+    - Ask user for confirmation before enabling plugins (closes: #8313)
+    - Emit private browsing session clearing event on "New Identity"
+
+ -- Erinn Clark <erinn@torproject.org>  Sun Mar 10 22:15:43 CET 2013
+
+Tor Browser Bundle (2.3.25-4); suite=linux
+
+  * Update Firefox to 17.0.3esr
+  * Downgrade OpenSSL to 1.0.0k
+  * Update libpng to 1.5.14
+  * Update NoScript to 2.6.5.7
+  * Firefox patch changes:
+    - Exempt remote @font-face fonts from font limits (and prefer them).
+      (closes: #8270)
+      * Remote fonts (aka "User Fonts") are not a fingerprinting threat, so
+      they should not count towards our CSS font count limits. Moreover,
+      if a CSS font-family rule lists any remote fonts, those fonts are
+      preferred over the local fonts, so we do not reduce the font count
+      for that rule.
+      * This vastly improves rendering and typography for many websites.
+    - Disable WebRTC in Firefox build options. (closes: 8178)
+      * WebRTC isn't slated to be enabled until Firefox 18, but the code
+        was getting compiled in already and is capable of creating UDP Sockets
+        and bypassing Tor. We disable it from build as a safety measure.
+    - Move prefs.js into omni.ja and extension-overrides. (closes: 3944)
+      * This causes our browser pref changes to appear as defaults. It also
+        means that future updates of TBB should preserve user pref settings.
+    - Fix a use-after-free that caused crashing on MacOS (closes: 8234)
+    - Eliminate several redundant, useless, and deprecated Firefox pref settings
+    - Report Firefox 17.0 as the Tor Browser user agent
+    - Use Firefox's click-to-play barrier for plugins instead of NoScript
+    - Set the Tor SOCKS+Control ports to 9150, 9151 respectively on all platforms
+      * This fixes a SOCKS race condition with our SOCKS autoport configuration
+        and HTTPS-Everywhere's Tor test. Firefox 17 appears to cache proxy
+        settings per URL now, which resulted in a proxy error for
+        check.torproject.org if we lost the race.
+  * Torbutton was updated to 1.5.0. The following issues were fixed:
+    - Remove old toggle observers and related code (closes: #5279)
+    - Simplify Security Preference UI and associated pref updates (closes: #3100)
+    - Eliminate redundancy in our Flash/plugin disabling code (closes: #1305)
+    - Leave most preferences under Tor Browser's control (closes: #3944)
+    - Disable toggle-on-startup and crash detection logic (closes: #7974)
+    - Disable/remove toggle-mode code and related observers (closes: #5279)
+    - Add menu hint to Torbutton icon (closes: #6431)
+    - Make Torbutton icon flash a warning symbol if TBB is out of date (closes: #7495)
+    - Perform version check every time there's a new tab. (closes: #6096)
+    - Rate limit version check queries to once every 1.5hrs max. (closes: #6156)
+    - misc: Allow WebGL and DOM storage.
+    - misc: Disable independent Torbutton updates
+    - misc: Change the recommended SOCKSPort to 9150 (to match TBB)
+
+ -- Erinn Clark <erinn@torproject.org>  Tue Feb 19 23:59:24 CET 2013
+
+Tor Browser Bundle (2.3.25-3); suite=linux
+
+  * Update OpenSSL to 1.0.1d
+  * Update HTTPS Everywhere to 3.1.3
+  * Update NoScript to 2.6.4.4
+
+ -- Erinn Clark <erinn@torproject.org>  Tue Feb  5 18:08:43 CET 2013
+
+Tor Browser Bundle (2.3.25-2); suite=linux
+
+  * Update Firefox to 10.0.12esr
+  * Update Libevent to 2.0.21-stable
+  * Update HTTPS Everywhere to 3.1.2
+  * Update NoScript to 2.6.4.2
+
+ -- Erinn Clark <erinn@torproject.org>  Fri Jan  4 11:46:05 CET 2013
+
+Tor Browser Bundle (2.3.25-1); suite=linux
+
+  * Update Tor to 0.2.3.25-rc
+  * Update Firefox 10.0.11esr
+  * Update Vidalia to 0.2.21
+  * Update NoScript to 2.6.2
+
+ -- Erinn Clark <erinn@torproject.org>  Sun Dec  2 09:03:27 GMT 2012
+
+Tor Browser Bundle (2.3.24-alpha-1); suite=linux
+
+  * Update Tor to 0.2.3.24-rc
+  * Update Firefox to 10.0.10esr
+  * Update NoScript to 2.5.9
+  * Update HTTPS Everywhere to 4.0development.2
+
+ -- Erinn Clark <erinn@torproject.org>  Sat Oct 27 12:16:59 BST 2012
+
+Tor Browser Bundle (2.3.23-alpha-1); suite=linux
+
+  * Update Tor to 0.2.3.23-rc
+  * Update Firefox to 10.0.9esr
+  * Update HTTPS Everywhere to 4.0development.1
+  * Update NoScript to 2.5.8
+  * Re-enable automatic Control and SOCKS port selection on Linux and OSX
+  * Update libpng to 1.5.13
+
+ -- Erinn Clark <erinn@torproject.org>  Mon Oct 22 16:14:09 BST 2012
+
+Tor Browser Bundle (2.3.22-alpha-1); suite=linux
+
+  * Update Tor to 0.2.3.22-rc
+  * Temporarily use fixed Control and SOCKS ports as a workaround for #6803
+
+ -- Erinn Clark <erinn@torproject.org>  Wed Sep 12 14:02:57 BST 2012
+
+Tor Browser Bundle (2.3.21-alpha-1); suite=linux
+
+  * Update Tor to 0.2.3.21-rc
+  * Update Firefox to 15.0.1
+  * Update Libevent to 2.0.20-stable
+  * Update Torbutton to 1.4.6.1
+  * Update HTTPS Everywhere to 3.0development.6
+  * Update NoScript to 2.5.4
+
+ -- Erinn Clark <erinn@torproject.org>  Sun Sep  9 10:42:38 BST 2012
+
+Tor Browser Bundle (2.3.20-alpha-1); suite=linux
+
+  * Update Tor to 0.2.3.20-rc
+  * Update libpng to 1.5.12
+  * Update NoScript to 2.5
+  * Change the urlbar search engine to Startpage (closes: #5925)
+  * Firefox patch updates:
+    - Fix the Tor Browser SIGFPE crash bug (closes: #6492)
+    - Add a redirect API for HTTPS-Everywhere (closes: #5477)
+    - Enable WebGL (as click-to-play only) (closes: #6370)
+
+ -- Erinn Clark <erinn@torproject.org>  Sun Aug  5 23:21:30 BST 2012
+
+Tor Browser Bundle (2.3.19-alpha-1); suite=linux
+
+  * Update Tor to 0.2.3.19-rc
+  * Update Firefox to 14.0.1
+  * Update libevent to 2.0.19-stable
+  * Update OpenSSL to 1.0.1c
+  * Update zlib to 1.2.7
+  * Update Torbutton to 1.4.6
+  * Update NoScript to 2.4.9
+  * Update HTTPS Everywhere to 3.0development.5
+  * Downgrade Vidalia to 0.2.20
+  * Update libpng to 1.5.12
+
+ -- Erinn Clark <erinn@torproject.org>  Wed Jul 25 15:12:37 BST 2012
+
+Tor Browser Bundle (2.3.12-alpha-2); suite=linux
+
+  * Update Firefox to 11.0
+  * Update NoScript to 2.3.4
+  * Update HTTPS Everywhere to 3.0development.1
+  * Disable HTTPS Everywhere SSL Observatory screen (closes: #5300)
+  * Always build to with warnings enabled (closes: #4470)
+  * Don't attempt to load the default KDE 4 theme from Vidalia, because that
+    fails when the Qt versions don't match (closes: #5214)
+
+ -- Erinn Clark <erinn@torproject.org>  Mon Mar 19 01:14:43 BRT 2012
+
+Tor Browser Bundle (2.3.12-alpha-1); suite=linux
+
+  * Initial release
+
+ -- Erinn Clark <erinn@torproject.org>  Thu Mar  1 14:04:56 BRT 2012

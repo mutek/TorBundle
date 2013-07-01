@@ -1,0 +1,10 @@
+APP_NAME=TorBundle
+APP_RELEASE=2.3.25.10
+APP_KERNEL=Linux
+APP_OS=Debian7
+APP_PLATFORM=ia32
+
+APP_BIN=startApp
+
+APP_ROOT=ioTorBundle2.3.25.10-Debian7/Linux-ia32
+
