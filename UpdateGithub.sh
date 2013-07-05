@@ -3,7 +3,7 @@
 # UpdateGithub.sh
 #
 #
-# Copyleft 2013 Luca Cappelletti <luca.cappelletti@gmail.com>
+# Copyleft 2013 Mutek <mutek@inventati.org>
 #
 # DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
 # Version 2, December 2004
@@ -20,8 +20,8 @@
 # 0. You just DO WHAT THE FUCK YOU WANT TO.
 #
 
-git config --global user.name "Luca Cappelletti"
-git config --global user.email luca.cappelletti@gmail.com
+git config --global user.name "Mutek"
+git config --global user.email mutek@inventati.org
 
 echo "Aggiungo i cambiamenti al database locale"
 git add .
